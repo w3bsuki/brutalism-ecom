@@ -1,0 +1,39 @@
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 10px));
+  }
+}
+
+.marqueeContainer {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: scroll var(--duration, 90s) linear infinite;
+  will-change: transform;
+  transition: all 0.5s ease;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+  filter: brightness(1.05);
+}
+
+.paused {
+  animation-play-state: paused;
+}
+
+.reverse {
+  animation-direction: reverse;
+}
+
+.marqueeGroup {
+  display: flex;
+  margin-right: 10px;
+} 

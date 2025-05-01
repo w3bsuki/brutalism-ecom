@@ -1,0 +1,26 @@
+Components to remove:
+
+1. alert-dialog.tsx - Not used in any components
+2. aspect-ratio.tsx - Not used in any components
+3. avatar.tsx - Not used in any components
+4. moving-border.tsx - Not used in main components
+5. separator.tsx - Not used anywhere
+6. skeleton.tsx - Not used anywhere
+7. tabs.tsx - Not used anywhere
+
+Components already removed:
+- infinite-carousel.tsx 
+- SignupCarousel.tsx
+
+Components to keep:
+- button.tsx - Used extensively
+- card.tsx - Used in featured collections
+- carousel.tsx - Used in multiple components
+- dialog.tsx - Used for modals and may be needed
+- dropdown-menu.tsx - Used in theme toggle
+- input.tsx - Used in forms
+- rating.tsx - Used in product displays
+- badge.tsx - Used in product displays
+- progress.tsx - Used in BrutalistHero
+- toast.tsx, toaster.tsx, use-toast.tsx - Used for notifications
+- optimized-image.tsx - Used for image optimization 

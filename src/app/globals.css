@@ -1,0 +1,426 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Define transition for theme changes on the root element */
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Make sure all elements inherit transition for theme changes */
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, border-color, color, box-shadow, transform;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+  }
+
+  /* Base theme variables */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    
+    /* Brutalist common theme variables */
+    --theme-black: 0 0% 0%;
+    --theme-white: 0 0% 100%;
+    --theme-border-width: 2px;
+    --theme-shadow-offset: 4px;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+  
+  /* Black and Yellow (Default) Brutalist Theme */
+  .blackYellow {
+    /* Base color values */
+    --theme-hue: 50;
+    --theme-saturation: 100%;
+    --theme-lightness: 50%;
+    
+    /* Derived HSL variables for consistent usage */
+    --theme-primary: var(--theme-hue) var(--theme-saturation) var(--theme-lightness);
+    --theme-primary-light: var(--theme-hue) var(--theme-saturation) 60%;
+    --theme-primary-dark: var(--theme-hue) var(--theme-saturation) 40%;
+    
+    /* For backward compatibility */
+    --brutalist-primary: var(--theme-black);
+    --brutalist-accent: var(--theme-primary);
+    --brutalist-highlight: var(--theme-primary);
+    --brutalist-button: var(--theme-primary);
+    --brutalist-button-hover: var(--theme-hue) var(--theme-saturation) 55%;
+    
+    /* Element-specific variables (for backward compatibility) */
+    --button-bg: hsl(var(--theme-primary));
+    --button-hover-bg: hsl(var(--theme-hue), var(--theme-saturation), 55%);
+    --button-text: hsl(var(--theme-black));
+    --card-border: hsl(var(--theme-black));
+    --card-shadow: hsl(var(--theme-primary));
+    --accent-bg: hsl(var(--theme-primary));
+    --accent-text: hsl(var(--theme-black));
+    --nav-accent: hsl(var(--theme-primary));
+    --highlight-color: hsl(var(--theme-primary));
+  }
+  
+  /* Pink and Black Brutalist Theme */
+  .pinkBlack {
+    /* Base color values */
+    --theme-hue: 330;
+    --theme-saturation: 100%;
+    --theme-lightness: 60%;
+    
+    /* Derived HSL variables for consistent usage */
+    --theme-primary: var(--theme-hue) var(--theme-saturation) var(--theme-lightness);
+    --theme-primary-light: var(--theme-hue) var(--theme-saturation) 70%;
+    --theme-primary-dark: var(--theme-hue) var(--theme-saturation) 50%;
+    
+    /* For backward compatibility */
+    --brutalist-primary: var(--theme-black);
+    --brutalist-accent: var(--theme-primary);
+    --brutalist-highlight: var(--theme-primary);
+    --brutalist-button: var(--theme-primary);
+    --brutalist-button-hover: var(--theme-hue) var(--theme-saturation) 65%;
+    
+    /* Element-specific variables (for backward compatibility) */
+    --button-bg: hsl(var(--theme-primary));
+    --button-hover-bg: hsl(var(--theme-hue), var(--theme-saturation), 65%);
+    --button-text: hsl(var(--theme-black));
+    --card-border: hsl(var(--theme-black));
+    --card-shadow: hsl(var(--theme-primary));
+    --accent-bg: hsl(var(--theme-primary));
+    --accent-text: hsl(var(--theme-black));
+    --nav-accent: hsl(var(--theme-primary));
+    --highlight-color: hsl(var(--theme-primary));
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Theme utility classes */
+  .theme-accent-bg {
+    @apply bg-[color:hsl(var(--theme-primary))];
+  }
+  
+  .theme-accent-text {
+    @apply text-[color:hsl(var(--theme-primary))];
+  }
+  
+  .theme-accent {
+    @apply bg-[color:hsl(var(--theme-primary))] text-black;
+  }
+  
+  .theme-border {
+    @apply border-2 border-black;
+  }
+  
+  .theme-accent-border {
+    @apply border-2 border-[color:hsl(var(--theme-primary))];
+  }
+  
+  .theme-shadow {
+    @apply shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+  }
+  
+  .theme-accent-shadow {
+    @apply shadow-[4px_4px_0px_0px_hsl(var(--theme-primary))];
+  }
+  
+  .theme-accent-ring {
+    @apply ring-[color:hsl(var(--theme-primary))];
+  }
+  
+  .theme-hover-accent {
+    @apply hover:bg-[color:hsl(var(--theme-primary))] hover:text-black transition-colors;
+  }
+  
+  .theme-hover-transform {
+    @apply hover:-translate-y-1 hover:translate-x-1 transition-transform;
+  }
+  
+  .theme-brutalist-card {
+    @apply border-2 border-black bg-white p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+  }
+  
+  .theme-brutalist-button {
+    @apply bg-black text-white border-2 border-black py-2 px-4 font-bold 
+           hover:bg-[color:hsl(var(--theme-primary))] hover:text-black 
+           transition-colors shadow-[3px_3px_0px_0px_rgba(0,0,0,1)];
+  }
+  
+  .theme-brutalist-accent-button {
+    @apply bg-[color:hsl(var(--theme-primary))] text-black border-2 border-black py-2 px-4 font-bold 
+           hover:bg-black hover:text-white
+           transition-colors shadow-[3px_3px_0px_0px_rgba(0,0,0,1)];
+  }
+  
+  /* Add shadow utilities for brutalist themes */
+  .shadow-brutalist-accent {
+    box-shadow: 4px 4px 0px 0px hsl(var(--theme-primary));
+  }
+  
+  @media (min-width: 640px) {
+    .shadow-brutalist-accent {
+      box-shadow: 6px 6px 0px 0px hsl(var(--theme-primary));
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-shimmer-loop {
+    animation: shimmer-loop 2s infinite;
+  }
+  
+  @keyframes shimmer-loop {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(200%);
+    }
+  }
+
+  /* Brutalist hover effect */
+  .brutalist-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .brutalist-hover:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 0 #000;
+  }
+  
+  /* Brutalist border effects with theme-aware colors */
+  .brutalist-border {
+    border: 4px solid #000;
+    box-shadow: 8px 8px 0 0 hsl(var(--theme-primary));
+  }
+  
+  .brutalist-border-yellow {
+    border: 4px solid #000;
+    box-shadow: 8px 8px 0 0 var(--accent-bg);
+  }
+  
+  /* Brutalist typography */
+  .brutalist-title {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+  }
+  
+  /* Brutalist angles */
+  .brutalist-rotate-1 {
+    transform: rotate(1deg);
+  }
+  
+  .brutalist-rotate-neg-1 {
+    transform: rotate(-1deg);
+  }
+}
+
+.border-pattern {
+  background-size: 20px 20px;
+  background-image: linear-gradient(to right, #00000020 1px, transparent 1px),
+    linear-gradient(to bottom, #00000020 1px, transparent 1px);
+}
+
+.noise-pattern {
+  position: relative;
+}
+
+.noise-pattern::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.diagonal-stripes {
+  background-image: linear-gradient(
+    45deg,
+    #00000010 25%,
+    transparent 25%,
+    transparent 50%,
+    #00000010 50%,
+    #00000010 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 20px 20px;
+}
+
+.zigzag-pattern {
+  background: linear-gradient(135deg, #00000010 25%, transparent 25%) -10px 0,
+    linear-gradient(225deg, #00000010 25%, transparent 25%) -10px 0,
+    linear-gradient(315deg, #00000010 25%, transparent 25%),
+    linear-gradient(45deg, #00000010 25%, transparent 25%);
+  background-size: 20px 20px;
+}
+
+.grid-pattern {
+  background-image: linear-gradient(#00000010 1px, transparent 1px),
+    linear-gradient(to right, #00000010 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.dot-pattern {
+  background-image: radial-gradient(
+    circle,
+    #00000015 1px,
+    rgba(0, 0, 0, 0) 1px
+  );
+  background-size: 15px 15px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+@keyframes brutalist-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.brutalist-bounce {
+  animation: brutalist-bounce 0.5s ease-in-out infinite;
+}
+
+@keyframes brutalist-shake {
+  0%, 100% { transform: translate(0); }
+  10% { transform: translate(-2px, 2px); }
+  20% { transform: translate(3px, -1px); }
+  30% { transform: translate(-3px, 1px); }
+  40% { transform: translate(2px, -2px); }
+  50% { transform: translate(-2px, 3px); }
+  60% { transform: translate(3px, 0px); }
+  70% { transform: translate(-2px, -1px); }
+  80% { transform: translate(1px, 2px); }
+  90% { transform: translate(-1px, -2px); }
+}
+
+.animate-brutalist-shake {
+  animation: brutalist-shake 0.5s ease-in-out;
+}
+
