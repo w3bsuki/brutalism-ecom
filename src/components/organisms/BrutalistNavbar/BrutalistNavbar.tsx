@@ -129,17 +129,20 @@ export function BrutalistNavbar() {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const input = form.querySelector('input') as HTMLInputElement;
-    if (input && input.value.trim()) {
-      // Implement actual search functionality here
-      console.log(`Searching for: ${input.value}`);
-      // Replace with your actual search implementation
-      // For example: router.push(`/search?q=${encodeURIComponent(input.value)}`);
-      
-      // Clear the input and close search after submitting
-      input.value = '';
+    
+    if (input.value) {
+      // In a real application, redirect to search results page
+      // For now, we'll just close the search modal
       setDesktopSearchOpen(false);
       setMobileSearchOpen(false);
     }
+  };
+
+  const handleSearch = (term: string) => {
+    // In a real application, this would initiate a search
+    // For now we'll close the search modal
+    setDesktopSearchOpen(false);
+    setMobileSearchOpen(false);
   };
 
   return (
@@ -639,7 +642,7 @@ export function BrutalistNavbar() {
                       className="bg-gray-800 text-white px-3 py-1 text-sm hover:bg-[color:hsl(var(--theme-primary))] hover:text-black transition-colors"
                       onClick={() => {
                         // Would typically set search input value
-                        console.log(`Search for ${term}`);
+                        handleSearch(term);
                       }}
                     >
                       {term}

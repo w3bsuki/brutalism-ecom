@@ -27,20 +27,42 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Hat Store | Premium Headwear Collection",
-  description: "Shop our exclusive collection of premium hats for all styles and occasions.",
-  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
-  authors: [{ name: 'Hat Store Team' }],
-  robots: {
-    index: true,
-    follow: true,
+  title: 'Brutalist Hats | Premium Hats with Brutalist Design',
+  description: 'Discover our collection of premium hats with bold brutalist design. Express your unique style with our high-quality headwear collection.',
+  keywords: 'hats, premium hats, brutalist design, headwear, caps, beanies, fashion',
+  authors: [{ name: 'Brutalist Hats' }],
+  creator: 'Brutalist Hats Team',
+  publisher: 'Brutalist Hats',
+  formatDetection: {
+    email: false,
+    telephone: false,
+    address: false,
   },
-  manifest: '/manifest.json',
+  metadataBase: new URL('https://brutalist-hats.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: "Hat Store | Premium Headwear Collection",
-    description: "Shop our exclusive collection of premium hats for all styles and occasions.",
-    type: 'website',
+    title: 'Brutalist Hats | Premium Headwear Collection',
+    description: 'Discover our collection of premium hats with bold brutalist design. Express your unique style with our high-quality headwear collection.',
+    url: 'https://brutalist-hats.vercel.app',
+    siteName: 'Brutalist Hats',
     locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Brutalist Hats Collection',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Brutalist Hats | Premium Headwear Collection',
+    description: 'Discover our collection of premium hats with bold brutalist design. Express your unique style.',
+    images: ['/images/og-image.jpg'],
   },
 };
 

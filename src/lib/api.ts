@@ -1,6 +1,7 @@
 import { Collection } from './types';
 import { Product } from '@/types/product';
-import { products as mockProducts } from '@/data/products';
+import { products } from '@/data/products';
+import { additionalProducts } from '@/data/additional-products';
 
 // Define a consistent placeholder image path
 const placeholderImage = "/images/hats/placeholder1.jpg";
@@ -183,23 +184,21 @@ export async function getTrendingProducts(): Promise<Product[]> {
  */
 export async function getAllProducts(): Promise<Product[]> {
   // Process all products with normalization
-  return mockProducts.map(normalizeProduct);
+  return products.map(normalizeProduct);
 }
 
 /**
- * Fetch a product by slug from API
+ * Fetch a product by slug
  */
-export async function getProductBySlug(slug: string): Promise<Product | null> {
-  console.log("Looking for product with slug:", slug);
-  const allProducts = await getAllProducts();
+export const getProductBySlug = (slug: string): Product | undefined => {
+  const allProducts = [...products, ...additionalProducts];
+  
+  // Find product by slug
   const product = allProducts.find(product => product.slug === slug);
   
-  if (!product) {
-    console.warn(`Product with slug "${slug}" not found!`);
-    console.log("Available products:", allProducts.map(p => p.slug));
-  } else {
-    console.log("Found product:", product.name);
+  if (product) {
+    return product;
   }
   
-  return product || null;
-} 
+  return undefined;
+}; 
