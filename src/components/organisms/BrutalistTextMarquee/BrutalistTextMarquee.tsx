@@ -19,8 +19,10 @@ export function BrutalistTextMarquee({
   const [showModal, setShowModal] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   
-  // Calculate animation duration - much slower now
-  const duration = 60; // Fixed at 60 seconds for a slow, smooth scroll
+  // Calculate animation duration based on speed prop
+  // Lower speed value = slower animation (higher duration)
+  // Higher speed value = faster animation (lower duration)
+  const duration = 240 - (speed * 2); // Speed 75 will result in duration of 90s 
   
   // Create 15 items for the marquee (fewer items for better spacing)
   const items = Array(15).fill(null);

@@ -18,6 +18,7 @@ export interface Product {
   isNew?: boolean;
   isSale?: boolean;
   inStock?: boolean;
+  inventory?: number;
   rating: number;
   reviews?: number;
   reviewCount?: number;

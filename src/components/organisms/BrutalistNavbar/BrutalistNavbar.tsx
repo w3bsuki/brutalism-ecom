@@ -151,75 +151,85 @@ export function BrutalistNavbar() {
         scrolled ? "py-2 sm:py-3" : "py-3 sm:py-5"
       }`}
     >
-      <div className="w-[95%] mx-auto">
+      {/* Subtle diagonal pattern for brutalist style */}
+      <div className="absolute inset-0 w-full h-full opacity-5 pointer-events-none" 
+        style={{ 
+          backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 20px, hsla(var(--theme-primary), 0.3) 20px, hsla(var(--theme-primary), 0.3) 22px)',
+          backgroundSize: '30px 30px'
+        }} 
+      />
+      
+      <div className="w-[95%] mx-auto relative z-10">
         <div className="flex items-center justify-between">
-          {/* Left - Logo and Social Icons */}
+          {/* Left - Logo with Social Icons */}
           <div className="flex items-center gap-4 relative py-3">
-            {/* Main border with pulsing animation - ADDED back with new styling */}
-            
-            <div className="relative">
-              <Link 
-                href="/" 
-                className="text-xl sm:text-2xl font-black tracking-tight text-white relative group truncate flex items-center gap-3 z-10 border-[4px] border-[color:hsl(var(--theme-primary))] p-2 hover:bg-[color:hsl(var(--theme-primary))] hover:text-black transition-all duration-300"
-              >
-                INDECISIVE WEAR
-                <div className="flex items-center border-l-2 border-[color:hsl(var(--theme-primary))] pl-2">
-                  <ThemeToggle />
+            {/* Logo with social icons inside and theme toggle inside on the left */}
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div className="text-xl sm:text-2xl font-black tracking-tight text-white relative z-10 border-[3px] border-[color:hsl(var(--theme-primary))] p-2 flex items-center">
+                  {/* Theme toggle inside logo on the left */}
+                  <div className="flex items-center mr-2 border-r-2 border-[color:hsl(var(--theme-primary))] pr-2">
+                    <ThemeToggle className="scale-75" />
+                  </div>
+                  
+                  <Link 
+                    href="/" 
+                    className="font-mono hover:text-[color:hsl(var(--theme-primary))] transition-colors"
+                  >
+                    INDECISIVE WEAR
+                  </Link>
+                  
+                  <div className="h-5 mx-2 border-l-2 border-[color:hsl(var(--theme-primary))]"></div>
+                  
+                  <div className="flex items-center gap-2">
+                    <div className="relative group z-20">
+                      <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-transparent p-1.5 flex items-center justify-center border-[2px] border-[color:hsl(var(--theme-primary))] text-[color:hsl(var(--theme-primary))] group-hover:bg-[color:hsl(var(--theme-primary))] group-hover:text-black transition-all cursor-pointer"
+                        aria-label="Instagram"
+                      >
+                        <Instagram size={16} strokeWidth={2.5} />
+                      </a>
+                      {/* White glow border */}
+                      <div className="absolute -inset-1 border border-white opacity-0 group-hover:opacity-60 transition-opacity pointer-events-none"></div>
+                    </div>
+                    
+                    <div className="relative group z-20">
+                      <a
+                        href="https://tiktok.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-transparent p-1.5 flex items-center justify-center border-[2px] border-[color:hsl(var(--theme-primary))] text-[color:hsl(var(--theme-primary))] group-hover:bg-[color:hsl(var(--theme-primary))] group-hover:text-black transition-all cursor-pointer"
+                        aria-label="TikTok"
+                      >
+                        <svg 
+                          width="16" 
+                          height="16" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="fill-current"
+                        >
+                          <path d="M19.321 5.562a5.122 5.122 0 0 1-3.664-1.514 5.12 5.12 0 0 1-1.514-3.664h-3.844v12.926c0 1.614-1.312 2.926-2.926 2.926a2.927 2.927 0 0 1-2.927-2.926 2.927 2.927 0 0 1 2.927-2.927c.323 0 .634.052.926.149V6.488a6.963 6.963 0 0 0-.926-.062C3.736 6.426 0 10.163 0 14.8c0 4.636 3.736 8.373 8.373 8.373 4.638 0 8.374-3.737 8.374-8.373V9.146a9.064 9.064 0 0 0 5.316 1.703v-3.844c-.94 0-1.84-.149-2.742-.443z"/>
+                        </svg>
+                      </a>
+                      {/* White glow border */}
+                      <div className="absolute -inset-1 border border-white opacity-0 group-hover:opacity-60 transition-opacity pointer-events-none"></div>
+                    </div>
+                  </div>
                 </div>
-              </Link>
-              <div className="absolute -inset-1 border border-white opacity-40 pointer-events-none"></div>
-            </div>
-
-            {/* Shadcn Separator between logo and social icons */}
-            <div className="relative h-12 mx-3 flex items-center">
-              <Separator orientation="vertical" className="h-full w-3 bg-[color:hsl(var(--theme-primary))]" />
-              <div className="absolute inset-0 -m-0.5 border border-white opacity-40 pointer-events-none"></div>
-            </div>
-            
-            {/* Social Media Icons - Improved styling */}
-            <div className="hidden md:flex items-center gap-3 z-10 relative">
-              <div className="flex items-center relative group z-20">
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="theme-accent-bg p-2 flex items-center justify-center border-2 border-black group-hover:bg-black group-hover:text-white transition-all"
-                  aria-label="Instagram"
-                >
-                  <Instagram size={18} strokeWidth={2.5} />
-                </a>
-                {/* White glow border */}
-                <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
+                <div className="absolute -inset-1 border border-white opacity-40 pointer-events-none"></div>
               </div>
               
-              <div className="flex items-center relative group z-20">
-                <a
-                  href="https://tiktok.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="theme-accent-bg p-2 flex items-center justify-center border-2 border-black group-hover:bg-black group-hover:text-white transition-all"
-                  aria-label="TikTok"
-                >
-                  <svg 
-                    width="18" 
-                    height="18" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="fill-current"
-                  >
-                    <path d="M19.321 5.562a5.122 5.122 0 0 1-3.664-1.514 5.12 5.12 0 0 1-1.514-3.664h-3.844v12.926c0 1.614-1.312 2.926-2.926 2.926a2.927 2.927 0 0 1-2.927-2.926 2.927 2.927 0 0 1 2.927-2.927c.323 0 .634.052.926.149V6.488a6.963 6.963 0 0 0-.926-.062C3.736 6.426 0 10.163 0 14.8c0 4.636 3.736 8.373 8.373 8.373 4.638 0 8.374-3.737 8.374-8.373V9.146a9.064 9.064 0 0 0 5.316 1.703v-3.844c-.94 0-1.84-.149-2.742-.443z"/>
-                  </svg>
-                </a>
-                {/* White glow border */}
-                <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
-              </div>
+              {/* Remove the external theme toggle since we moved it inside */}
             </div>
           </div>
 
           {/* Middle - Desktop Navigation - Fixed to be perfectly centered */}
           <div className="hidden md:flex justify-center absolute left-0 right-0 mx-auto">
-            <nav className="flex items-center justify-center gap-8">
+            <nav className="flex items-center justify-center gap-6">
               {navItems.map((item) => (
                 <div
                   key={item.label}
@@ -229,18 +239,14 @@ export function BrutalistNavbar() {
                 >
                   <Link
                     href={item.href}
-                    className="flex items-center text-white font-black text-sm tracking-widest hover:theme-accent-text transition-colors py-1 relative uppercase"
+                    className="flex items-center text-white font-mono font-bold text-sm tracking-widest py-1 px-3 relative uppercase border-y-2 border-transparent hover:border-[color:hsl(var(--theme-primary))] transition-all duration-200 hover:translate-x-[2px] hover:translate-y-[-2px] hover:shadow-[2px_-2px_0_hsla(var(--theme-primary),0.6)]"
                   >
                     {item.label}
                     {item.children && (
-                      <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${activeDropdown === item.label ? "rotate-180 theme-accent-text" : ""}`} />
+                      <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${activeDropdown === item.label ? "rotate-180 text-[color:hsl(var(--theme-primary))]" : ""}`} />
                     )}
-                    <span className="absolute left-0 -bottom-1 w-full h-[3px] theme-accent-bg scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></span>
+                    <span className="absolute left-0 -bottom-1 w-full h-[3px] bg-[color:hsl(var(--theme-primary))] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></span>
                   </Link>
-                  
-                  <div className={`absolute h-[3px] -bottom-1 left-0 theme-accent-bg transition-all duration-300 ${
-                    activeDropdown === item.label ? "w-full" : "w-0"
-                  }`} />
                   
                   <AnimatePresence>
                     {item.children && activeDropdown === item.label && (
@@ -249,14 +255,14 @@ export function BrutalistNavbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-2 w-60 bg-white border-4 border-black overflow-hidden z-50 theme-shadow"
+                        className="absolute top-full left-0 mt-2 w-60 bg-black border-4 border-[color:hsl(var(--theme-primary))] overflow-hidden z-50 shadow-[6px_6px_0px_rgba(0,0,0,1)]"
                       >
                         <div className="py-1">
                           {item.children.map((child) => (
                             <Link
                               key={child.label}
                               href={child.href}
-                              className="block px-4 py-2.5 text-sm font-bold text-black tracking-tight theme-hover-accent border-b border-black last:border-b-0 hover:pl-6 duration-150"
+                              className="block px-4 py-2.5 text-sm font-bold text-white tracking-tight border-b border-[color:hsl(var(--theme-primary))] last:border-b-0 hover:bg-[color:hsl(var(--theme-primary))] hover:text-black hover:pl-6 duration-150"
                             >
                               {child.label}
                             </Link>
@@ -271,12 +277,12 @@ export function BrutalistNavbar() {
               {/* Search Icon in Navigation */}
               <button
                 ref={desktopSearchButtonRef}
-                className="text-white hover:theme-accent-text transition-colors relative group"
+                className="text-white hover:text-[color:hsl(var(--theme-primary))] transition-colors relative group bg-transparent p-1 border-2 border-transparent hover:border-[color:hsl(var(--theme-primary))] hover:translate-x-[2px] hover:translate-y-[-2px] hover:shadow-[2px_-2px_0_hsla(var(--theme-primary),0.6)]"
                 onClick={toggleDesktopSearch}
                 aria-label="Search"
               >
                 <Search size={20} strokeWidth={2.5} />
-                <span className="absolute left-0 -bottom-1 w-full h-[3px] theme-accent-bg scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></span>
+                <span className="absolute left-0 -bottom-1 w-full h-[3px] bg-[color:hsl(var(--theme-primary))] scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left"></span>
               </button>
             </nav>
           </div>
@@ -494,7 +500,7 @@ export function BrutalistNavbar() {
                                 <Link
                                   key={child.label}
                                   href={child.href}
-                                  className="text-gray-300 font-bold text-lg py-1 hover:text-[color:hsl(var(--theme-primary))] transition-colors flex items-center group"
+                                  className="text-gray-300 font-bold text-lg py-1 hover:text-[color:hsl(var(--theme-primary))] transition-colors flex items-center group border-b border-transparent hover:border-[color:hsl(var(--theme-primary))]"
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   <span className="w-2 h-2 bg-[color:hsl(var(--theme-primary))] mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -555,10 +561,10 @@ export function BrutalistNavbar() {
                       href="https://instagram.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="theme-accent-bg p-2 flex items-center justify-center border-2 border-black group-hover:bg-black group-hover:text-white transition-all"
+                      className="bg-transparent p-2 flex items-center justify-center border-2 border-[color:hsl(var(--theme-primary))] text-[color:hsl(var(--theme-primary))] group-hover:bg-[color:hsl(var(--theme-primary))] group-hover:text-black transition-all hover:scale-110 cursor-pointer"
                       aria-label="Instagram"
                     >
-                      <Instagram size={18} strokeWidth={2.5} />
+                      <Instagram size={22} strokeWidth={2.5} />
                     </a>
                     {/* White glow border */}
                     <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
@@ -569,12 +575,12 @@ export function BrutalistNavbar() {
                       href="https://tiktok.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="theme-accent-bg p-2 flex items-center justify-center border-2 border-black group-hover:bg-black group-hover:text-white transition-all"
+                      className="bg-transparent p-2 flex items-center justify-center border-2 border-[color:hsl(var(--theme-primary))] text-[color:hsl(var(--theme-primary))] group-hover:bg-[color:hsl(var(--theme-primary))] group-hover:text-black transition-all hover:scale-110 cursor-pointer"
                       aria-label="TikTok"
                     >
                       <svg 
-                        width="18" 
-                        height="18" 
+                        width="22" 
+                        height="22" 
                         viewBox="0 0 24 24" 
                         fill="none" 
                         xmlns="http://www.w3.org/2000/svg"
@@ -583,6 +589,13 @@ export function BrutalistNavbar() {
                         <path d="M19.321 5.562a5.122 5.122 0 0 1-3.664-1.514 5.12 5.12 0 0 1-1.514-3.664h-3.844v12.926c0 1.614-1.312 2.926-2.926 2.926a2.927 2.927 0 0 1-2.927-2.926 2.927 2.927 0 0 1 2.927-2.927c.323 0 .634.052.926.149V6.488a6.963 6.963 0 0 0-.926-.062C3.736 6.426 0 10.163 0 14.8c0 4.636 3.736 8.373 8.373 8.373 4.638 0 8.374-3.737 8.374-8.373V9.146a9.064 9.064 0 0 0 5.316 1.703v-3.844c-.94 0-1.84-.149-2.742-.443z"/>
                       </svg>
                     </a>
+                    {/* White glow border */}
+                    <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
+                  </div>
+                  
+                  {/* Theme toggle in mobile menu */}
+                  <div className="flex items-center relative group z-20">
+                    <ThemeToggle className="border-2 border-[color:hsl(var(--theme-primary))]" />
                     {/* White glow border */}
                     <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
                   </div>

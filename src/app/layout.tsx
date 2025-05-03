@@ -1,25 +1,37 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Space_Mono, Space_Grotesk } from "next/font/google";
+import "modern-normalize/modern-normalize.css";
+import "focus-visible";
 import "./globals.css";
-import { BrutalistNavbar } from "@/components/layout/BrutalistNavbar";
-import { BrutalistFooter } from "@/components/organisms/BrutalistFooter";
-import { Toaster } from "@/components/molecules/Toast";
-import { ThemeProvider } from "@/components/atoms/ThemeProvider";
-import { CartProvider } from "@/components/atoms/CartProvider";
-import { ClientInitScript } from "@/components/ClientInitScript";
 import { Suspense } from "react";
-import { Analytics } from "@/components/analytics";
-import { CookieConsentWrapper } from "@/components/molecules/CookieConsent/CookieConsentWrapper";
+import { ThemeScript } from "@/components/ThemeScript";
 
 // Preload and optimize font loading
 const inter = Inter({ 
   subsets: ["latin"],
   display: 'swap',
-  preload: true,
   variable: '--font-inter',
 });
 
-export const viewport = {
+// Add Space Mono for brutalist headings and accents
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ['400', '700'],
+  display: 'swap',
+  variable: '--font-space-mono',
+});
+
+// Add Space Grotesk as an alternative sans-serif option
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-space-grotesk',
+});
+
+// Combine font variables for use throughout the app
+const fonts = `${inter.variable} ${spaceMono.variable} ${spaceGrotesk.variable}`;
+
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -64,31 +76,13 @@ export const metadata: Metadata = {
     description: 'Discover our collection of premium hats with bold brutalist design. Express your unique style.',
     images: ['/images/og-image.jpg'],
   },
+  icons: {
+    icon: '/favicon.ico'
+  },
 };
 
-// Script to prevent flashing of wrong theme on page load
-const ThemeScript = () => {
-  const themeScript = `
-    (function() {
-      try {
-        const storedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const systemTheme = prefersDark ? 'pinkBlack' : 'blackYellow';
-        
-        if (storedTheme === 'pinkBlack' || storedTheme === 'blackYellow') {
-          document.documentElement.classList.add(storedTheme);
-        } else {
-          document.documentElement.classList.add(systemTheme);
-        }
-      } catch (e) {
-        console.error('Failed to access localStorage for theme:', e);
-        document.documentElement.classList.add('blackYellow');
-      }
-    })();
-  `;
-
-  return <script dangerouslySetInnerHTML={{ __html: themeScript }} />;
-};
+// Import ClientWrapper component
+import { ClientWrapper } from "@/components/ClientWrapper";
 
 export default function RootLayout({
   children,
@@ -96,46 +90,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}>
+    <html lang="en" suppressHydrationWarning className={fonts}>
       <head>
         <ThemeScript />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#000000" />
       </head>
-      <body className={`${inter.className} min-h-screen flex flex-col antialiased bg-white`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="blackYellow"
-          enableSystem={false}
-          disableTransitionOnChange={false}
-          themes={['blackYellow', 'pinkBlack']}
-          storageKey="theme"
-        >
-          <CartProvider>
-            <ClientInitScript />
-            {/* Use Suspense boundaries for better loading experience */}
-            <Suspense fallback={<div className="fixed top-0 w-full h-2 bg-primary/30 animate-pulse"></div>}>
-              <BrutalistNavbar />
+      <body className={`min-h-screen flex flex-col antialiased bg-white font-sans`}>
+        <ClientWrapper>
+          <main className="flex-1">
+            <Suspense fallback={<div className="h-screen w-full flex items-center justify-center">Loading...</div>}>
+              {children}
             </Suspense>
-            
-            <main className="flex-1">
-              {/* Content wrapped in Suspense for better loading */}
-              <Suspense fallback={<div className="h-screen w-full flex items-center justify-center">Loading...</div>}>
-                {children}
-              </Suspense>
-            </main>
-            
-            <Suspense fallback={null}>
-              <BrutalistFooter />
-            </Suspense>
-            
-            <Toaster />
-            
-            {/* Cookie Consent Banner */}
-            <CookieConsentWrapper />
-            
-            {/* Performance monitoring */}
-            <Analytics />
-          </CartProvider>
-        </ThemeProvider>
+          </main>
+        </ClientWrapper>
       </body>
     </html>
   );

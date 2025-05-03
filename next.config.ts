@@ -3,24 +3,20 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 import CompressionPlugin from 'compression-webpack-plugin';
 import { WebpackConfigContext } from 'next/dist/server/config-shared';
 import webpack from 'webpack';
+import withPWA from 'next-pwa';
 
-const analyzeBundle = process.env.ANALYZE === 'true' 
-  ? withBundleAnalyzer({ enabled: true })
-  : (config: NextConfig) => config;
+// Configure bundle analyzer
+const withBundleAnalyzerConfig = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+  openAnalyzer: true,
+});
 
 const nextConfig: NextConfig = {
-  reactStrictMode: false,
-  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '**',
-      },
-    ],
+    domains: ['placehold.co', 'res.cloudinary.com', 'images.unsplash.com'],
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60,
   },
   // Force ignoring TypeScript errors
   typescript: {
@@ -90,9 +86,9 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
     scrollRestoration: true,
   },
-  // Add webpack configuration for further optimization
-  webpack: (config: webpack.Configuration, { dev, isServer }: WebpackConfigContext) => {
-    // Only apply these optimizations in production
+  // Configure webpack to compile with optimizations
+  webpack: (config, { dev, isServer }) => {
+    // Only run these optimizations for production builds
     if (!dev && !isServer) {
       // Enable compression for all assets
       config.plugins?.push(
@@ -104,52 +100,26 @@ const nextConfig: NextConfig = {
         })
       );
 
-      // Split chunks more efficiently
-      if (config.optimization) {
-        config.optimization.splitChunks = {
-          chunks: 'all',
-          maxInitialRequests: Infinity,
-          minSize: 20000,
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name(module: any) {
-                // Safe handling of module.context
-                if (!module.context) return 'npm.unknown';
-                
-                // Get the name of the npm package
-                const match = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
-                if (!match) return 'npm.unknown';
-                
-                const packageName = match[1];
-                // Return a nice clean package name
-                return `npm.${packageName.replace('@', '')}`;
-              },
-            },
-            // Specific chunking for larger dependencies
-            react: {
-              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-              name: 'react',
-              chunks: 'all',
-              priority: 40,
-            },
-            framerMotion: {
-              test: /[\\/]node_modules[\\/](framer-motion)[\\/]/,
-              name: 'framer-motion',
-              priority: 30,
-            },
-            utils: {
-              test: /[\\/]node_modules[\\/](lodash|date-fns|tailwind-merge)[\\/]/,
-              name: 'utils',
-              priority: 20,
-            },
-          },
-        };
-      }
+      // Split chunks for better caching
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        maxInitialRequests: 25,
+        minSize: 20000,
+      };
     }
-
+    
     return config;
   },
+  transpilePackages: [],
 };
 
-export default analyzeBundle(nextConfig);
+// Configure the PWA plugin for production only
+const withPWAConfig = withPWA({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+  skipWaiting: true,
+});
+
+// Apply all plugins
+export default withBundleAnalyzerConfig(withPWAConfig(nextConfig));

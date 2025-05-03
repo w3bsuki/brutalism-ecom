@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        'xxs': '375px', // Custom breakpoint for very small mobile screens
+      },
       colors: {
         border: "var(--border)",
         input: "var(--input)",
@@ -123,7 +126,9 @@ module.exports = {
         accordionClosed: "accordionClosed 300ms ease-out",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["var(--font-inter)", ...fontFamily.sans],
+        mono: ["var(--font-space-mono)", ...fontFamily.mono],
+        grotesk: ["var(--font-space-grotesk)", ...fontFamily.sans],
       },
     },
   },

@@ -90,6 +90,47 @@
     --theme-white: 0 0% 100%;
     --theme-border-width: 2px;
     --theme-shadow-offset: 4px;
+
+    /* Font variables */
+    --font-sans: var(--font-inter);
+    --font-mono: var(--font-space-mono);
+    --font-grotesk: var(--font-space-grotesk);
+
+    /* Other root variables */
+    --radius: 0px;
+
+    /* Brutalist theme colors */
+    --brutalist-primary: 0 0% 0%;  /* Black */
+    --brutalist-primary-foreground: 0 0% 100%;  /* White */
+    --brutalist-accent: 52 96% 62%;  /* Yellow-400 */
+    --brutalist-accent-foreground: 0 0% 0%;  /* Black */
+    --brutalist-background: 0 0% 100%;  /* White */
+    --brutalist-foreground: 0 0% 0%;  /* Black */
+    --brutalist-border: 0 0% 0%;  /* Black */
+    --brutalist-highlight: 52 96% 62%;  /* Yellow-400 */
+    --brutalist-button: 0 0% 0%;  /* Black */
+    --brutalist-button-hover: 0 0% 20%;  /* Dark Gray */
+
+    /* Base shadcn colors */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
   }
 
   .dark {

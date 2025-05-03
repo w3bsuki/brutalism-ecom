@@ -11,6 +11,7 @@ export interface ShopActiveFilters {
   onSale: boolean;
   inStock: boolean;
   newArrivals: boolean;
+  rating: number | null;
 }
 
 /**

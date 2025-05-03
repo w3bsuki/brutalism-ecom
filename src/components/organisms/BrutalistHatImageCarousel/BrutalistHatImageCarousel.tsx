@@ -391,16 +391,17 @@ export function BrutalistHatImageCarousel({
       
       {/* View All CTA Button */}
       <div className="relative z-10 flex justify-center mt-8 mb-6">
-        <div className="relative inline-block group">
-          <div className="absolute inset-0 bg-[color:var(--accent-bg)] translate-x-2 translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-200"></div>
-          <Link 
-            href="/shop"
-            className="relative inline-flex items-center justify-center gap-2 bg-black text-white border-4 border-[color:var(--accent-bg)] px-8 py-4 font-black text-xl uppercase tracking-tight hover:bg-[color:var(--accent-bg)] hover:text-black transition-colors duration-300 z-10"
-          >
+        <Link 
+          href="/shop"
+          className="relative inline-block bg-black text-white border-4 border-[color:var(--accent-bg)] px-8 py-4 font-black text-xl uppercase tracking-tight overflow-hidden group"
+        >
+          <span className="relative z-10 flex items-center justify-center gap-2">
             <span>View All Hats</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-          </Link>
-        </div>
+          </span>
+          <span className="absolute inset-0 bg-[color:var(--accent-bg)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          <span className="absolute -inset-[3px] border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+        </Link>
       </div>
     </section>
   );

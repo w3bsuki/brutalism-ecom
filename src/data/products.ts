@@ -144,7 +144,7 @@ export const products: Product[] = [
     salePrice: null,
     collection: "fitted-caps",
     category: "fitted-caps",
-    sizes: ["7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4"],
+    sizes: ["S", "M", "L"],
     colors: ["black", "navy", "red"],
     isNew: false,
     isSale: false,

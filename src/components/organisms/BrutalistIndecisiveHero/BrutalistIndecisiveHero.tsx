@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { BadgeCheck, ChevronRight } from "lucide-react";
+import { BadgeCheck, ChevronRight, ArrowRight } from "lucide-react";
 import { BrutalistIndecisiveHeroProps } from "./types";
 
 export function BrutalistIndecisiveHero({ 
   title = "INDECISIVE WEAR", 
-  subtitle = "Two options. One decision. No regrets.", 
+  subtitle = "Two options. One decision. Zero regrets.",
   ctaText = "SHOP NOW", 
   ctaLink = "/shop",
   leftHat = {
@@ -136,65 +136,43 @@ export function BrutalistIndecisiveHero({
           </div>
         </motion.div>
         
-        {/* Middle column - Black with text - full width on mobile */}
+        {/* Middle column - Enhanced professional design */}
         <div className="relative bg-black flex flex-col items-center justify-center px-4 md:px-6 py-12 md:py-0 h-full text-center border-b-2 md:border-b-0 md:border-r-2 border-black overflow-hidden col-span-1 md:col-span-1">
-          {/* Noisy background texture */}
-          <div className="absolute inset-0 opacity-10">
-            <Image
-              src="/images/noise.png"
-              alt="Noise texture"
-              fill
-              className="object-cover"
-              style={{ mixBlendMode: 'overlay' }}
-            />
+          {/* Subtle grid background */}
+          <div className="absolute inset-0 opacity-8">
+            <div className="h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
           </div>
-
-          {/* Replaced Premium Headwear with Can't Decide Badge */}
-          <motion.div 
-            className="mb-6 md:mb-8 relative z-10"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            <div className="theme-accent-bg text-black font-bold py-1 px-3 border-2 border-black transform rotate-[-2deg] shadow-[3px_3px_0px_0px_rgba(0,0,0,0.7)]">
-              <span className="tracking-tight text-sm sm:text-base uppercase">Can't Decide? Get Both</span>
-            </div>
-          </motion.div>
           
-          {/* Main title */}
-          <motion.div
-            className="relative"
-            variants={titleVariants}
-            initial="hidden"
-            animate={isLoaded ? "visible" : "hidden"}
-          >
-            <div className="relative inline-block">
-              {/* Title background elements */}
-              <div className="absolute -inset-1 theme-accent-bg z-0"></div>
-              
-              <h1 className="relative text-white text-center font-black text-4xl sm:text-5xl md:text-7xl tracking-tighter leading-none mb-3 md:mb-4 px-4 py-2 bg-black z-10 border-4 border-white">
-                {title}
-                <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 theme-accent-bg text-black font-bold text-xs sm:text-sm px-2 sm:px-3 py-1 border-2 border-black z-20 inline-block transform rotate-[-2deg] shadow-[3px_3px_0px_0px_rgba(0,0,0,0.7)]">
-                  <span className="flex items-center">
-                    <BadgeCheck className="w-3 h-3 mr-1 sm:w-4 sm:h-4 sm:mr-1.5" strokeWidth={2} />
-                    VERIFIED
-                  </span>
-                </div>
-              </h1>
-            </div>
-          </motion.div>
+          {/* Centered Title/Subtitle Content */}
+          <div className="relative z-10 flex flex-col items-center">
+            {/* Main title */}
+            <motion.div
+              className="relative mb-4"
+              variants={titleVariants}
+              initial="hidden"
+              animate={isLoaded ? "visible" : "hidden"}
+            >
+              <div className="relative inline-block">
+                <div className="absolute -inset-1 theme-accent-bg z-0"></div>
+                <h1 className="relative text-white text-center font-black text-4xl sm:text-5xl md:text-7xl tracking-tighter leading-none px-5 py-3 bg-black z-10 border-4 border-white">
+                  {title}
+                </h1>
+              </div>
+            </motion.div>
+            
+            {/* Subtitle */}
+            <motion.div
+              className="text-white text-center font-medium mb-8 md:mb-10 text-base md:text-lg max-w-xs md:max-w-sm relative z-10"
+              variants={subtitleVariants}
+              initial="hidden"
+              animate={isLoaded ? "visible" : "hidden"}
+            >
+              <p className="mb-3 opacity-90 font-light tracking-wide">{subtitle}</p>
+              <div className="w-12 h-1 mx-auto theme-accent-bg mt-4"></div>
+            </motion.div>
+          </div>
           
-          {/* Simplified Subtitle */}
-          <motion.div
-            className="theme-accent-text text-center font-medium mb-8 md:mb-10 text-base md:text-lg max-w-xs md:max-w-sm relative z-10"
-            variants={subtitleVariants}
-            initial="hidden"
-            animate={isLoaded ? "visible" : "hidden"}
-          >
-            <p className="mb-3">{subtitle}</p>
-          </motion.div>
-          
-          {/* Mobile hat options display - improved layout */}
+          {/* Mobile hat options display - Leave this as is */}
           <div className="flex w-full space-x-4 justify-center mb-8 md:hidden">
             <div className="relative w-[130px] h-[130px]">
               <div className="absolute -top-3 left-0 right-0 flex justify-center z-30">
@@ -246,31 +224,53 @@ export function BrutalistIndecisiveHero({
               </Link>
             </div>
           </div>
-          
-          {/* CTA Button with static border instead of animated */}
-          <motion.div
-            className="relative z-10 mt-2 md:mt-4"
-            variants={ctaVariants}
-            initial="hidden"
-            animate={isLoaded ? "visible" : "hidden"}
-          >
-            <Link
-              href={ctaLink}
-              className="group relative inline-flex px-6 py-3 sm:px-8 sm:py-4 font-black text-white bg-black border-4 theme-accent-border items-center text-base sm:text-lg z-20"
-            >
-              <span className="relative z-10 group-hover:text-black transition-colors flex items-center pointer-events-none">
-                {ctaText}
-                <ChevronRight className="ml-2 w-5 h-5" />
-              </span>
-              {/* Static background color for hover */}
-              <div className="absolute inset-0 theme-accent-bg z-0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            </Link>
-            
-            {/* Static border effect (not blinking) */}
-            <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-70"></div>
-          </motion.div>
+
         </div>
         
+        {/* --- Absolutely Positioned Elements for Middle Column --- */} 
+
+        {/* "Can't decide? Get Both" badge - positioned where discount code was */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={isLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ delay: 0.9, duration: 0.5 }}
+          className="absolute top-8 left-1/2 -translate-x-1/2 z-10 w-full px-4 flex justify-center"
+        >
+          <div className="flex items-center bg-black/50 backdrop-blur-sm p-2 border border-white/30">
+            <span className="text-white font-bold text-sm flex items-center tracking-normal">
+              <BadgeCheck className="w-3 h-3 mr-1 sm:w-4 sm:h-4 sm:mr-1.5" strokeWidth={2} />
+              Can't decide? Get Both
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Enhanced CTA Button - positioned absolutely at the bottom */}
+        <motion.div
+          variants={ctaVariants}
+          initial="hidden"
+          animate={isLoaded ? "visible" : "hidden"}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center"
+        >
+          {/* Discount code moved above the shop button */}
+          <div className="mb-4">
+            <span className="text-white font-bold text-sm">
+              Get 15% OFF with code: <span className="theme-accent-text font-black">HATLOVER</span>
+            </span>
+          </div>
+          
+          <a 
+            href={ctaLink} 
+            className="relative inline-block bg-white text-black font-black text-lg uppercase tracking-tight border-4 border-pink-500 px-8 py-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-black hover:text-white hover:border-white transition-all duration-300"
+          >
+            <span className="flex items-center">
+              {ctaText}
+              <ArrowRight className="ml-2" size={18} />
+            </span>
+          </a>
+        </motion.div>
+
+        {/* --- End Absolutely Positioned Elements --- */}
+
         {/* Right column - Second hat option - hidden on mobile */}
         <motion.div 
           className="relative overflow-hidden h-[0px] md:h-full md:block hidden"

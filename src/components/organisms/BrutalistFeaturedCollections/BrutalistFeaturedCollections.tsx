@@ -200,13 +200,14 @@ export function BrutalistFeaturedCollections({
       >
         <Link 
           href="/collections" 
-          className="relative group inline-flex items-center"
+          className="relative group inline-block bg-black text-white font-black uppercase px-6 sm:px-8 py-3 sm:py-4 border-2 border-white overflow-hidden"
         >
-          <div className="bg-black text-white px-6 sm:px-8 py-3 sm:py-4 font-black uppercase flex items-center gap-2 border-2 sm:border-2 theme-accent-border transform group-hover:translate-x-[-6px] group-hover:translate-y-[-6px] group-hover:theme-accent transition-all duration-300 shadow-[2px_2px_0px_0px_rgba(var(--accent-rgb),0.8)]">
+          <span className="relative z-10 flex items-center gap-2">
             <span className="text-sm sm:text-base">View All Collections</span>
             <Plus size={18} className="transform group-hover:rotate-90 transition-transform duration-300" />
-          </div>
-          <div className="absolute inset-0 border-2 sm:border-2 border-black translate-x-3 translate-y-3 -z-10 theme-accent-bg"></div>
+          </span>
+          <span className="absolute inset-0 theme-accent-bg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          <span className="absolute -inset-[3px] border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
         </Link>
       </motion.div>
     </section>

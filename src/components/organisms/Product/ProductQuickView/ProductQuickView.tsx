@@ -78,7 +78,7 @@ export function ProductQuickView({ product, isOpen, onClose }: ProductQuickViewP
         </div>
       ),
       action: (
-        <Link href="/cart" className="bg-black text-white px-3 py-1 text-xs font-bold theme-hover-accent uppercase">
+        <Link href="/cart" className="bg-black text-white px-3 py-1 text-xs font-bold hover:bg-[color:var(--accent-bg)] hover:text-black transition-colors uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] border-2 border-[color:var(--accent-bg)]">
           View Cart
         </Link>
       ),

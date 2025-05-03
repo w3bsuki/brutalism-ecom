@@ -2,6 +2,7 @@ import { Collection } from './types';
 import { Product } from '@/types/product';
 import { products } from '@/data/products';
 import { additionalProducts } from '@/data/additional-products';
+import { supabase } from './supabase';
 
 // Define a consistent placeholder image path
 const placeholderImage = "/images/hats/placeholder1.jpg";
@@ -11,7 +12,7 @@ const placeholderImage = "/images/hats/placeholder1.jpg";
  */
 export function normalizeProduct(product: any): Product {
   // Calculate sale price if discount is provided
-  let salePrice = product.salePrice;
+  let salePrice = product.salePrice || product.sale_price;
   if (!salePrice && product.discount && product.discount > 0) {
     salePrice = product.price * (1 - product.discount / 100);
   }
@@ -25,22 +26,25 @@ export function normalizeProduct(product: any): Product {
     salePrice: salePrice || undefined,
     discount: typeof product.discount === 'number' ? product.discount : 0,
     images: Array.isArray(product.images) && product.images.length ? 
-      product.images : [placeholderImage, placeholderImage],
-    colors: Array.isArray(product.colors) ? product.colors : [],
-    sizes: Array.isArray(product.sizes) ? product.sizes : [],
+      product.images : (typeof product.images === 'string' ? JSON.parse(product.images) : [placeholderImage, placeholderImage]),
+    colors: Array.isArray(product.colors) ? product.colors : 
+            (typeof product.colors === 'string' ? JSON.parse(product.colors) : []),
+    sizes: Array.isArray(product.sizes) ? product.sizes : 
+           (typeof product.sizes === 'string' ? JSON.parse(product.sizes) : []),
     collection: product.collection || product.category || "caps",
     categories: Array.isArray(product.categories) ? 
-      product.categories : product.category ? [product.category] : ["caps"],
+      product.categories : (typeof product.categories === 'string' ? 
+      JSON.parse(product.categories) : product.category ? [product.category] : ["caps"]),
     thumbnail: product.thumbnail || (Array.isArray(product.images) && product.images[0]) || placeholderImage,
-    isFeatured: Boolean(product.isFeatured),
-    isNew: Boolean(product.isNew),
+    isFeatured: Boolean(product.isFeatured || product.is_featured),
+    isNew: Boolean(product.isNew || product.is_new),
     isSale: Boolean(product.isSale) || (product.discount && product.discount > 0) || (product.salePrice && product.salePrice < product.price),
     inStock: product.inStock !== false, // Default to true unless explicitly false
     rating: typeof product.rating === 'number' ? product.rating : 4.0,
-    reviews: product.reviews || product.reviewCount || 0,
-    reviewCount: product.reviewCount || product.reviews || 0,
-    createdAt: product.createdAt || new Date().toISOString(),
-    updatedAt: product.updatedAt || new Date().toISOString(),
+    reviews: product.reviews || product.reviewCount || product.review_count || 0,
+    reviewCount: product.reviewCount || product.review_count || product.reviews || 0,
+    createdAt: product.createdAt || product.created_at || new Date().toISOString(),
+    updatedAt: product.updatedAt || product.updated_at || new Date().toISOString(),
   };
 }
 
@@ -48,8 +52,42 @@ export function normalizeProduct(product: any): Product {
  * Fetch featured collections from API
  */
 export async function getFeaturedCollections(): Promise<Collection[]> {
+  try {
+    // Try to fetch from Supabase
+    const { data: collectionsData, error } = await supabase
+      .from('collections')
+      .select('*')
+      .limit(4);
+    
+    if (error) {
+      console.error('Error fetching collections from Supabase:', error);
+      throw error;
+    }
+    
+    if (collectionsData && collectionsData.length > 0) {
+      // Convert from Supabase format to our app format
+      return collectionsData.map(collection => ({
+        id: collection.id,
+        name: collection.name,
+        slug: collection.handle,
+        description: collection.description || '',
+        image: collection.image || '/images/hats/placeholder.jpg',
+        products: []
+      }));
+    }
+    
+    // Fallback to mock data if Supabase is empty or not properly set up
+    return getMockFeaturedCollections();
+  } catch (err) {
+    console.error('Error in getFeaturedCollections:', err);
+    // Fallback to mock data
+    return getMockFeaturedCollections();
+  }
+}
+
+function getMockFeaturedCollections(): Collection[] {
   // Mock data for featured collections
-  const featuredCollections: Collection[] = [
+  return [
     {
       id: '1',
       name: 'Summer Collection',
@@ -75,8 +113,6 @@ export async function getFeaturedCollections(): Promise<Collection[]> {
       products: [] // Ensure this is always an array
     }
   ];
-  
-  return featuredCollections;
 }
 
 // Mock data for trending products
@@ -174,31 +210,94 @@ const trendingProductsData: Product[] = [
  * @returns Array of trending products
  */
 export async function getTrendingProducts(): Promise<Product[]> {
-  // In a real application, this would make an API call
-  // For now, we'll return mock data
-  return trendingProductsData;
+  try {
+    // Try to fetch from Supabase
+    const { data: productsData, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('is_featured', true)
+      .order('created_at', { ascending: false })
+      .limit(8);
+    
+    if (error) {
+      console.error('Error fetching trending products from Supabase:', error);
+      throw error;
+    }
+    
+    if (productsData && productsData.length > 0) {
+      // Convert from Supabase format to our app format
+      return productsData.map(normalizeProduct);
+    }
+    
+    // Fallback to mock data
+    return trendingProductsData;
+  } catch (err) {
+    console.error('Error in getTrendingProducts:', err);
+    // Fallback to mock data
+    return trendingProductsData;
+  }
 }
 
 /**
  * Fetch all products from API
  */
 export async function getAllProducts(): Promise<Product[]> {
-  // Process all products with normalization
-  return products.map(normalizeProduct);
+  try {
+    // Try to fetch from Supabase
+    const { data: productsData, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      console.error('Error fetching all products from Supabase:', error);
+      throw error;
+    }
+    
+    if (productsData && productsData.length > 0) {
+      // Convert from Supabase format to our app format
+      return productsData.map(normalizeProduct);
+    }
+    
+    // Fallback to mock data
+    return products.map(normalizeProduct);
+  } catch (err) {
+    console.error('Error in getAllProducts:', err);
+    // Fallback to mock data
+    return products.map(normalizeProduct);
+  }
 }
 
 /**
  * Fetch a product by slug
  */
-export const getProductBySlug = (slug: string): Product | undefined => {
-  const allProducts = [...products, ...additionalProducts];
-  
-  // Find product by slug
-  const product = allProducts.find(product => product.slug === slug);
-  
-  if (product) {
+export const getProductBySlug = async (slug: string): Promise<Product | undefined> => {
+  try {
+    // Try to fetch from Supabase
+    const { data: productData, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+    
+    if (error) {
+      console.error(`Error fetching product with slug ${slug} from Supabase:`, error);
+      // If not found in Supabase, fall back to local data
+      throw error;
+    }
+    
+    if (productData) {
+      return normalizeProduct(productData);
+    }
+    
+    // Fallback to local data
+    const allProducts = [...products, ...additionalProducts];
+    const product = allProducts.find(product => product.slug === slug);
+    return product;
+  } catch (err) {
+    // Fallback to local data
+    const allProducts = [...products, ...additionalProducts];
+    const product = allProducts.find(product => product.slug === slug);
     return product;
   }
-  
-  return undefined;
 }; 

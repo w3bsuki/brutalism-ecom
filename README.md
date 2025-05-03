@@ -93,6 +93,49 @@ While the MVP is complete, the following enhancements could be implemented in fu
 5. Customer reviews integration
 6. Performance optimization
 
+## Deployment
+
+### Production Build
+
+To create an optimized production build, run:
+
+```bash
+# Generate production build
+npm run build
+
+# Start production server
+npm start
+```
+
+### Deployment Platforms
+
+This project can be easily deployed to various platforms:
+
+#### Vercel (Recommended)
+1. Import your repository to Vercel
+2. Set environment variables in the Vercel dashboard
+3. Vercel will automatically detect Next.js and configure the build settings
+
+#### Netlify
+1. Import your repository to Netlify
+2. Set build command to `npm run build`
+3. Set publish directory to `.next`
+4. Configure environment variables in the Netlify dashboard
+
+#### Self-Hosted
+1. Create a production build as shown above
+2. Configure your server to point to the project directory
+3. Set up a process manager like PM2 to keep the application running
+4. Set up environment variables on your server
+
+### Environment Configuration
+
+Create a `.env` file based on the provided `.env.example` template. For production deployment, make sure to:
+
+1. Set `NEXT_PUBLIC_ENVIRONMENT=production`
+2. Configure all API keys and endpoints for production
+3. Enable the `NEXT_PUBLIC_ENABLE_PURCHASE` flag if real transactions should be processed
+
 ## License
 
 [MIT License](LICENSE)

@@ -110,7 +110,7 @@ export function BrutalistTrendingCarousel({
         </div>
       ),
       action: (
-        <Link href="/cart" className="bg-black text-white px-3 py-1 text-xs font-bold hover:bg-[color:var(--accent-bg)] hover:text-black transition-colors uppercase">
+        <Link href="/cart" className="bg-black text-white px-3 py-1 text-xs font-bold hover:bg-[color:var(--accent-bg)] hover:text-black transition-colors uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] border-2 border-[color:var(--accent-bg)]">
           View Cart
         </Link>
       ),
@@ -150,16 +150,16 @@ export function BrutalistTrendingCarousel({
         <div className="mb-14 flex flex-col items-center">
           <div className="relative inline-block">
             <div className="absolute -inset-2 theme-accent-bg z-0"></div>
-            <h2 className="relative text-5xl md:text-6xl font-black uppercase tracking-tighter bg-white px-6 py-3 border-2 border-black z-10 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)]">
+            <h2 className="relative text-5xl md:text-6xl font-black font-mono uppercase tracking-tighter bg-white px-6 py-3 border-2 border-black z-10 shadow-[3px_3px_0px_0px_rgba(0,0,0,0.5)]">
               {title}
-              <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-red-600 text-white font-bold text-xs sm:text-sm px-2 sm:px-3 py-1 border-2 border-black z-20 flex items-center shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)]">
+              <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-red-600 text-white font-bold font-mono text-xs sm:text-sm px-2 sm:px-3 py-1 border-2 border-black z-20 flex items-center shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)]">
                 <Star className="w-3 h-3 mr-1 sm:w-4 sm:h-4 sm:mr-1.5 fill-white" /> HOT
               </div>
             </h2>
           </div>
           
           {/* Pagination indicator moved below title */}
-          <div className="mt-4 flex items-center gap-2 text-lg bg-black text-white px-3 py-1.5 font-bold border-2 border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)]">
+          <div className="mt-4 flex items-center gap-2 text-lg bg-black text-white px-3 py-1.5 font-bold font-mono border-2 border-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.5)]">
             <span className="font-black theme-accent-text">{currentSlide + 1}</span>
             <span>/</span>
             <span>{totalSlides}</span>
@@ -226,16 +226,19 @@ export function BrutalistTrendingCarousel({
                               <div className="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out flex gap-3">
                                 <button 
                                   onClick={(e) => openQuickView(e, product)}
-                                  className="bg-white border-2 border-black py-2 px-4 flex items-center gap-2 hover:bg-[color:var(--accent-bg)] hover:text-black transition-colors font-bold uppercase text-sm shadow-[3px_3px_0_0_#000]"
+                                  className="bg-white border-2 border-black py-2 px-4 flex items-center gap-2 hover:bg-[color:var(--accent-bg)] hover:text-black transition-colors font-bold font-mono uppercase text-sm shadow-[3px_3px_0_0_#000]"
                                 >
                                   <span>Quick View</span>
                                 </button>
                                 <button 
                                   onClick={(e) => handleAddToCart(e, product)}
-                                  className="bg-black text-white border-2 border-[color:var(--accent-bg)] py-2 px-4 flex items-center gap-2 hover:bg-[color:var(--accent-bg)] hover:text-black hover:border-black transition-all font-bold uppercase text-sm shadow-[3px_3px_0_0_#000]"
+                                  className="group relative overflow-hidden bg-black text-white border-2 border-[color:var(--accent-bg)] py-2 px-4 flex items-center gap-2 font-bold font-mono uppercase text-sm shadow-[3px_3px_0_0_#000] hover:border-black transition-all duration-300"
                                 >
-                                  <ShoppingBag size={18} />
-                                  <span>Add to Cart</span>
+                                  <span className="relative z-10 flex items-center gap-2 group-hover:text-black transition-colors duration-300">
+                                    <ShoppingBag size={18} />
+                                    <span>Add to Cart</span>
+                                  </span>
+                                  <span className="absolute inset-0 bg-[color:var(--accent-bg)] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></span>
                                 </button>
                               </div>
                             </div>
@@ -338,13 +341,14 @@ export function BrutalistTrendingCarousel({
         <div className="mt-12 flex justify-center">
           <Link 
             href="/collections" 
-            className="relative group inline-flex items-center"
+            className="relative group inline-block bg-black text-white px-8 py-4 font-black uppercase border-2 border-white overflow-hidden"
           >
-            <div className="bg-black text-white px-8 py-4 font-black uppercase flex items-center gap-2 border-2 border-white transform group-hover:translate-x-[-4px] group-hover:translate-y-[-4px] group-hover:bg-[color:var(--accent-bg)] group-hover:text-black transition-all duration-300">
+            <span className="relative z-10 flex items-center gap-2">
               <span>View All Products</span>
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </div>
-            <div className="absolute inset-0 border-2 border-black translate-x-2 translate-y-2 -z-10 bg-[color:var(--accent-bg)]"></div>
+            </span>
+            <span className="absolute inset-0 bg-[color:var(--accent-bg)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span className="absolute -inset-[3px] border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </Link>
         </div>
       </div>

@@ -1,4 +1,4 @@
-# Brutalist Hats Documentation
+x# Brutalist Hats Documentation
 
 ## Project Overview
 This e-commerce website sells premium hats with a brutalist design aesthetic. The project is built with Next.js, React, TypeScript, and Tailwind CSS.

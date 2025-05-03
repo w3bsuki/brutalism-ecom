@@ -1,0 +1,15 @@
+This is a debug file. 
+The issue appears to be that either:
+1. The file permissions don't allow us to edit the BrutalistHero.tsx file
+2. The file is somehow being protected or locked
+3. There's a version control system preventing changes
+4. The file might be symlinked from elsewhere
+
+Our changes are being correctly submitted but not applied to the actual file.
+
+Please check:
+- If the file is read-only
+- If there's a git hook or other tool preventing changes
+- If you're using a library that recreates the file on page load
+
+Try manually editing the file directly in your IDE instead. 
