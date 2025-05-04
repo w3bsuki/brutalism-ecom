@@ -52,6 +52,20 @@ This plan outlines the steps to finalize the Brutalist E-commerce project, focus
     -   [ ] Check major interactive elements have appropriate ARIA labels where needed.
     -   [ ] Ensure core images have alt text.
 
+## III-B. PWA & Mobile Experience Enhancement
+
+-   **[✓] PWA Support**
+    -   [✓] Verify next-pwa installation and configuration
+    -   [✓] Create and optimize PWA icons 
+    -   [✓] Update manifest.json for proper PWA installation
+    -   [✓] Add custom PWA installation prompt
+-   **[✓] Mobile UX Improvements**
+    -   [✓] Add offline notification component
+    -   [✓] Create loading screen for PWA launch
+    -   [✓] Optimize viewport settings for mobile
+    -   [✓] Add mobile-specific CSS enhancements
+    -   [✓] Improve touch target sizes and spacing for mobile users
+
 ## IV. Final Checks & Deployment Prep
 
 -   **[ ] Code Cleanup**

@@ -34,7 +34,8 @@ export default function CartPage() {
     return (
       <div className="bg-white">
         <BrutalistTextMarquee 
-          text="🛒 YOUR CART 🛒"
+          text="YOUR CART"
+          separator="🛒"
           bgColor="bg-black"
           textColor="text-white"
           borderColor="theme-accent-bg"
@@ -87,7 +88,8 @@ export default function CartPage() {
   return (
     <div className="bg-white">
       <BrutalistTextMarquee 
-        text="🛒 YOUR CART 🛒"
+        text="YOUR CART"
+        separator="🛒"
         bgColor="bg-black"
         textColor="text-white"
         borderColor="theme-accent-bg"

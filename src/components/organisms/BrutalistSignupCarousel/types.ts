@@ -3,7 +3,6 @@ export interface SignupCarouselItem {
   text: string;
   link: string;
   highlight?: boolean;
-  color?: string;
 }
 
 export interface BrutalistSignupCarouselProps {

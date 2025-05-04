@@ -40,6 +40,10 @@ export const useWishlist = create<WishlistStore>()(
     }),
     {
       name: "wishlist-storage",
+      migrate: (persistedState: any, version) => {
+        return { items: Array.isArray(persistedState.items) ? persistedState.items : [] };
+      },
+      version: 1,
     }
   )
 ); 

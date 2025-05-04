@@ -8,6 +8,11 @@ export interface BrutalistIndecisiveHeroProps {
     image: string;
     link: string;
   };
+  centerHat?: {
+    name: string;
+    image: string;
+    link: string;
+  };
   rightHat?: {
     name: string;
     image: string;

@@ -4,7 +4,9 @@ export interface BrutalistTextMarqueeProps {
   textColor?: string;
   borderColor?: string;
   borderSize?: string;
+  removeTopBorder?: boolean;
   instagramUrl?: string;
+  separator?: string;
   speed?: number;
   direction?: 'left' | 'right';
 } 

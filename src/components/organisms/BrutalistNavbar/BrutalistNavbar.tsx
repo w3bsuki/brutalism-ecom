@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, X, ChevronDown, Instagram, ChevronRight } from "lucide-react";
+import { Menu, Search, ShoppingBag, X, ChevronDown, Instagram, ChevronRight, Heart, Percent } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/hooks/use-cart";
+import { useWishlist } from "@/hooks/use-wishlist";
 import { navItems } from "./types";
 import { ThemeToggle } from "@/components/atoms/ThemeToggle";
 import { Separator } from "@/components/ui/separator";
@@ -42,6 +43,8 @@ export function BrutalistNavbar() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   
   const { totalItems } = useCart();
+  const { items: wishlistItems } = useWishlist();
+  const wishlistCount = wishlistItems.length;
   
   // Refs for click outside detection
   const desktopSearchRef = useRef<HTMLDivElement>(null);
@@ -166,7 +169,7 @@ export function BrutalistNavbar() {
             {/* Logo with social icons inside and theme toggle inside on the left */}
             <div className="flex items-center gap-3">
               <div className="relative">
-                <div className="text-xl sm:text-2xl font-black tracking-tight text-white relative z-10 border-[3px] border-[color:hsl(var(--theme-primary))] p-2 flex items-center">
+                <div className="text-lg sm:text-xl md:text-2xl font-black tracking-tight text-white relative z-10 border-[3px] border-[color:hsl(var(--theme-primary))] p-2 flex items-center">
                   {/* Theme toggle inside logo on the left */}
                   <div className="flex items-center mr-2 border-r-2 border-[color:hsl(var(--theme-primary))] pr-2">
                     <ThemeToggle className="scale-75" />
@@ -176,12 +179,13 @@ export function BrutalistNavbar() {
                     href="/" 
                     className="font-mono hover:text-[color:hsl(var(--theme-primary))] transition-colors"
                   >
-                    INDECISIVE WEAR
+                    <span className="hidden sm:inline">INDECISIVE WEAR</span>
+                    <span className="sm:hidden">I-WEAR</span>
                   </Link>
                   
                   <div className="h-5 mx-2 border-l-2 border-[color:hsl(var(--theme-primary))]"></div>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="hidden sm:flex items-center gap-2">
                     <div className="relative group z-20">
                       <a
                         href="https://instagram.com"
@@ -222,8 +226,6 @@ export function BrutalistNavbar() {
                 </div>
                 <div className="absolute -inset-1 border border-white opacity-40 pointer-events-none"></div>
               </div>
-              
-              {/* Remove the external theme toggle since we moved it inside */}
             </div>
           </div>
 
@@ -288,30 +290,18 @@ export function BrutalistNavbar() {
           </div>
           
           {/* Right - Icons and Buttons */}
-          <div className="flex items-center justify-end flex-shrink-0 gap-2 md:gap-4">
-            {/* Mobile Search Button */}
+          <div className="flex items-center justify-end flex-shrink-0 gap-3 md:gap-4">
+            {/* Mobile Search Button - improved visibility */}
             <button
-              className="md:hidden text-white hover:theme-accent-text transition-colors p-1.5"
+              className="md:hidden theme-accent-bg text-black border-2 border-white p-1.5 flex items-center justify-center hover:bg-white transition-colors"
               aria-label="Search"
               onClick={toggleMobileSearch}
             >
-              <Search size={20} strokeWidth={2.5} />
+              <Search size={18} strokeWidth={2.5} />
             </button>
 
             {/* SHOP & CART Button with glowing effect - Combined */}
             <div className="hidden md:flex items-center gap-3">
-              {/* Shop Button */}
-              <div className="relative group z-20">
-                <Link 
-                  href="/shop"
-                  className="theme-accent-bg border-4 border-black font-black uppercase text-black tracking-widest text-base px-6 py-2 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all"
-                >
-                  SHOP
-                </Link>
-                {/* White glow border */}
-                <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
-              </div>
-
               {/* Cart Button */}
               <div className="relative group z-20">
                 <Link
@@ -328,24 +318,68 @@ export function BrutalistNavbar() {
                 {/* White glow border */}
                 <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
               </div>
+
+              {/* Shop Button - In the middle */}
+              <div className="relative group z-20">
+                <Link 
+                  href="/shop"
+                  className="theme-accent-bg border-4 border-black font-black uppercase text-black tracking-widest text-base px-6 py-2 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all"
+                >
+                  SHOP
+                </Link>
+                {/* White glow border */}
+                <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
+              </div>
+
+              {/* Wishlist Button - On the right */}
+              <div className="relative group z-20">
+                <Link
+                  href="/wishlist"
+                  className="theme-accent-bg border-4 border-black font-black uppercase text-black tracking-widest text-base p-2 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all"
+                >
+                  <div className="relative">
+                    <Heart className="h-6 w-6" />
+                    <span className="absolute -top-1 -right-1 bg-white text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-black group-hover:scale-110 transition-transform">
+                      {wishlistCount}
+                    </span>
+                  </div>
+                </Link>
+                {/* White glow border */}
+                <div className="absolute -inset-1 border-2 border-white pointer-events-none z-10 opacity-60"></div>
+              </div>
             </div>
             
-            {/* Mobile Cart Button */}
-            <Link
-              href="/cart"
-              className="md:hidden relative p-1.5 text-white hover:theme-accent-text transition-colors group"
-            >
-              <div className="relative">
-                <ShoppingBag className="h-6 w-6" />
-                <span className="absolute -top-1 -right-1 theme-accent-bg text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-black group-hover:scale-110 transition-transform">
-                  {totalItems}
-                </span>
-              </div>
-            </Link>
+            {/* Mobile Cart Button - improved visibility */}
+            <div className="md:hidden flex items-center gap-2">
+              <Link
+                href="/cart"
+                className="theme-accent-bg text-black border-2 border-white p-1.5 flex items-center justify-center hover:bg-white transition-colors group"
+              >
+                <div className="relative">
+                  <ShoppingBag className="h-5 w-5" />
+                  <span className="absolute -top-1 -right-1 bg-white text-black text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center border border-black group-hover:scale-110 transition-transform">
+                    {totalItems}
+                  </span>
+                </div>
+              </Link>
+              
+              {/* Mobile Wishlist Button */}
+              <Link
+                href="/wishlist"
+                className="theme-accent-bg text-black border-2 border-white p-1.5 flex items-center justify-center hover:bg-white transition-colors group"
+              >
+                <div className="relative">
+                  <Heart className="h-5 w-5" />
+                  <span className="absolute -top-1 -right-1 bg-white text-black text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center border border-black group-hover:scale-110 transition-transform">
+                    {wishlistCount}
+                  </span>
+                </div>
+              </Link>
+            </div>
             
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - improved visibility */}
             <button
-              className="md:hidden text-white p-1.5"
+              className="md:hidden theme-accent-bg text-black border-2 border-white p-1.5 flex items-center justify-center hover:bg-white transition-colors"
               onClick={() => {
                 setMobileMenuOpen(!mobileMenuOpen);
                 if (mobileSearchOpen) {
@@ -355,9 +389,9 @@ export function BrutalistNavbar() {
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {mobileMenuOpen ? (
-                <X size={24} strokeWidth={2.5} />
+                <X size={20} strokeWidth={2.5} />
               ) : (
-                <Menu size={24} strokeWidth={2.5} />
+                <Menu size={20} strokeWidth={2.5} />
               )}
             </button>
           </div>
@@ -543,6 +577,25 @@ export function BrutalistNavbar() {
                         CART
                         <span className="absolute -top-3 -right-3 bg-white text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-black group-hover:scale-110 transition-transform">
                           {totalItems}
+                        </span>
+                      </span>
+                      <span className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out -z-10"></span>
+                    </div>
+                    <div className="absolute inset-0 bg-white border-4 border-black translate-x-3 translate-y-3 -z-10"></div>
+                  </Link>
+                  
+                  {/* Mobile Wishlist Button */}
+                  <Link
+                    href="/wishlist"
+                    className="relative inline-block group"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <div className="relative bg-[color:hsl(var(--theme-primary))] border-4 border-black font-black uppercase text-black tracking-widest px-6 py-3.5 text-center text-xl z-10 flex items-center justify-center gap-2 group-hover:bg-black group-hover:text-white transition-colors duration-200">
+                      <Heart className="h-5 w-5" />
+                      <span className="relative">
+                        WISHLIST
+                        <span className="absolute -top-3 -right-3 bg-white text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-black group-hover:scale-110 transition-transform">
+                          {wishlistCount}
                         </span>
                       </span>
                       <span className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out -z-10"></span>

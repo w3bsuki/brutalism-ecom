@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { BrutalistNavbar } from "@/components/layout/BrutalistNavbar";
 import { BrutalistFooter } from "@/components/organisms/BrutalistFooter";
 import { ThemeProvider } from "@/components/atoms/ThemeProvider";
@@ -9,8 +9,31 @@ import { ClientInitScript } from "@/components/ClientInitScript";
 import { Analytics } from "@/components/analytics";
 import { CookieConsentWrapper } from "@/components/molecules/CookieConsent/CookieConsentWrapper";
 import { Toaster as HotToaster } from 'react-hot-toast';
+import { PWAInstallPrompt } from "@/components/molecules/PWAInstallPrompt";
+import { OfflineNotice } from "@/components/molecules/OfflineNotice";
+import { AppLoading } from "@/components/molecules/AppLoading";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isPWA, setIsPWA] = useState(false);
+
+  useEffect(() => {
+    // Check if this is running in standalone PWA mode
+    const isInStandaloneMode = () => 
+      window.matchMedia('(display-mode: standalone)').matches || 
+      (window.navigator as any).standalone || 
+      document.referrer.includes('android-app://');
+    
+    setIsPWA(isInStandaloneMode());
+    
+    // Hide the loading screen after a short delay
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <ThemeProvider
       attribute="class"
@@ -22,6 +45,13 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     >
       <CartProvider>
         <ClientInitScript />
+        
+        {/* Show loading screen only in PWA mode */}
+        {isPWA && isLoading && <AppLoading />}
+        
+        {/* Offline notice will show when the user loses internet connection */}
+        <OfflineNotice />
+        
         {/* Use Suspense boundaries for better loading experience */}
         <Suspense fallback={<div className="fixed top-0 w-full h-2 bg-primary/30 animate-pulse"></div>}>
           <BrutalistNavbar />
@@ -80,6 +110,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         
         {/* Cookie Consent Banner */}
         <CookieConsentWrapper />
+        
+        {/* PWA Install Prompt - shown only on mobile devices that can install the app */}
+        <PWAInstallPrompt />
         
         {/* Performance monitoring */}
         <Analytics />

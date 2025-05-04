@@ -465,3 +465,80 @@ body {
   animation: brutalist-shake 0.5s ease-in-out;
 }
 
+/* Add these mobile PWA specific styles at the end of the file */
+
+/* Improve tap target sizes on mobile */
+@media (max-width: 768px) {
+  button, 
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improve spacing for better touch targets */
+  .mobile-touch-spacing > * {
+    margin-bottom: 1rem;
+  }
+  
+  /* Fix 100vh issue on mobile browsers */
+  .h-screen {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  /* Style adjustments for PWA display */
+  @media (display-mode: standalone) {
+    /* Add padding for iOS safe areas */
+    body {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+    
+    /* Visually indicate standalone PWA mode */
+    .pwa-indicator {
+      display: block;
+    }
+  }
+  
+  /* Hide elements in PWA mode */
+  @media (display-mode: standalone) {
+    .hide-in-pwa {
+      display: none !important;
+    }
+  }
+}
+
+/* Make overscroll feel nicer on touch devices */
+@media (pointer: coarse) {
+  html, body {
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Avoid zoom on input focus in iOS */
+@media (max-width: 768px) {
+  input, 
+  select, 
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Hide scrollbars on mobile but keep functionality */
+@media (max-width: 768px) {
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+

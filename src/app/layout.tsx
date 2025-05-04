@@ -34,8 +34,11 @@ const fonts = `${inter.variable} ${spaceMono.variable} ${spaceGrotesk.variable}`
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
+  minimumScale: 1,
+  userScalable: true,
   themeColor: '#000000',
+  viewportFit: 'cover',
 };
 
 export const metadata: Metadata = {
@@ -77,8 +80,17 @@ export const metadata: Metadata = {
     images: ['/images/og-image.jpg'],
   },
   icons: {
-    icon: '/favicon.ico'
+    icon: '/favicon.ico',
+    apple: '/icons/icon-192x192.png',
+    shortcut: '/icons/icon-192x192.png',
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Brutalist Hats',
+  },
+  applicationName: 'Brutalist Hats',
 };
 
 // Import ClientWrapper component
@@ -96,6 +108,10 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#000000" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Brutalist Hats" />
+        <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`min-h-screen flex flex-col antialiased bg-white font-sans`}>
         <ClientWrapper>

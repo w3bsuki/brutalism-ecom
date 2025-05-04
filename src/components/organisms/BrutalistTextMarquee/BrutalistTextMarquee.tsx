@@ -13,6 +13,7 @@ export function BrutalistTextMarquee({
   borderSize = "border-y-2",
   removeTopBorder = false,
   instagramUrl = "https://instagram.com/xuliranka",
+  separator = "•",
   speed = 80,
   direction = 'left'
 }: BrutalistTextMarqueeProps) {
@@ -24,8 +25,8 @@ export function BrutalistTextMarquee({
   // Higher speed value = faster animation (lower duration)
   const duration = 240 - (speed * 2); // Speed 75 will result in duration of 90s 
   
-  // Create 15 items for the marquee (fewer items for better spacing)
-  const items = Array(15).fill(null);
+  // Create 10 items for the marquee (fewer items for better spacing)
+  const items = Array(10).fill(null);
 
   // Simulated Instagram posts
   const instagramPosts = [
@@ -78,7 +79,7 @@ export function BrutalistTextMarquee({
         }} 
       />
       
-      <div className="relative w-full overflow-hidden" style={{ height: '70px' }}>
+      <div className="relative w-full overflow-hidden" style={{ height: '80px' }}>
         <div 
           className={`absolute flex whitespace-nowrap ${primaryAnimationClass} ${isPaused ? 'animate-paused' : ''} items-center justify-center h-full`}
           style={{ animationDuration: `${duration}s` }}
@@ -86,18 +87,21 @@ export function BrutalistTextMarquee({
           {items.map((_, index) => (
             <div key={index} className="flex items-center h-full">
               <button 
-                className="outline-none focus:outline-none mx-10 relative group"
+                className="outline-none focus:outline-none mx-14 relative group"
                 onClick={() => setShowModal(true)}
               >
-                <span className={`text-3xl font-black tracking-tighter cursor-pointer group-hover:text-white transition-colors duration-300 relative z-10 ${textColor}`}>
+                <span 
+                  className={`text-2xl font-bold tracking-wide cursor-pointer group-hover:text-white transition-colors duration-300 relative z-10 ${textColor} antialiased subpixel-antialiased`}
+                  style={{ letterSpacing: '0.05em' }}
+                >
                   {text}
                 </span>
                 {/* Hover effect underline */}
                 <span className="absolute -bottom-1 left-0 w-0 h-1 bg-white group-hover:w-full transition-all duration-300 ease-in-out"></span>
               </button>
               
-              {/* Elegant vertical line separator - replacing diamond/square */}
-              <div className="h-8 w-0.5 mx-4 theme-accent-bg"></div>
+              {/* Single emoji separator */}
+              <span className="mx-6 theme-accent-text text-2xl">{separator}</span>
             </div>
           ))}
         </div>
@@ -110,16 +114,19 @@ export function BrutalistTextMarquee({
           {items.map((_, index) => (
             <div key={index} className="flex items-center h-full">
               <button 
-                className="outline-none focus:outline-none mx-10"
+                className="outline-none focus:outline-none mx-14"
                 onClick={() => setShowModal(true)}
               >
-                <span className={`text-3xl font-black tracking-tighter cursor-pointer hover:text-white transition-colors duration-300 ${textColor}`}>
+                <span 
+                  className={`text-2xl font-bold tracking-wide cursor-pointer hover:text-white transition-colors duration-300 ${textColor} antialiased subpixel-antialiased`}
+                  style={{ letterSpacing: '0.05em' }}
+                >
                   {text}
                 </span>
               </button>
               
-              {/* Elegant vertical line separator - matching primary marquee */}
-              <div className="h-8 w-0.5 mx-4 theme-accent-bg"></div>
+              {/* Single emoji separator - matching primary marquee */}
+              <span className="mx-6 theme-accent-text text-2xl">{separator}</span>
             </div>
           ))}
         </div>
@@ -249,22 +256,18 @@ export function BrutalistTextMarquee({
         
         .animate-marquee {
           animation: marquee linear infinite;
-          animation-duration: ${duration}s;
         }
         
         .animate-marquee2 {
           animation: marquee2 linear infinite;
-          animation-duration: ${duration}s;
         }
         
         .animate-marquee-right {
           animation: marquee-right linear infinite;
-          animation-duration: ${duration}s;
         }
         
         .animate-marquee2-right {
           animation: marquee2-right linear infinite;
-          animation-duration: ${duration}s;
         }
         
         .animate-paused {

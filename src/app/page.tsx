@@ -65,14 +65,18 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Full-width Brutalist Hero section with two hat options */}
       <BrutalistIndecisiveHero 
-        title="INDECISIVE WEAR" 
-        subtitle="Two options. One decision. Zero regrets."
+        subtitle="Three options. One decision. Zero regrets."
         ctaText="SHOP NOW"
         ctaLink="/shop"
         leftHat={{
           name: "Classic Baseball Cap",
           image: "/images/hats/placeholder1.jpg",
           link: "/product/classic-baseball-cap"
+        }}
+        centerHat={{
+          name: "Structured Snapback",
+          image: "/images/hats/placeholder2.jpg",
+          link: "/product/structured-snapback"
         }}
         rightHat={{
           name: "Vintage Dad Hat",
@@ -141,7 +145,8 @@ export default async function Home() {
       {/* Text Marquee before Shop by Style section - fixing to match other marquees */}
       <Suspense fallback={<TextMarqueeFallback />}>
         <BrutalistTextMarquee 
-          text="🔥 UNLIMITED STYLES 🔥"
+          text="UNLIMITED STYLES"
+          separator="🔥"
           bgColor="bg-black"
           textColor="text-white"
           borderColor="theme-accent-bg"
@@ -161,7 +166,8 @@ export default async function Home() {
       {/* ADDED: Bestsellers Marquee */}
       <Suspense fallback={<TextMarqueeFallback />}>
         <BrutalistTextMarquee 
-          text="🏆 BESTSELLERS 🏆"
+          text="BESTSELLERS"
+          separator="🏆"
           bgColor="bg-black"
           textColor="text-white"
           borderColor="theme-accent-bg"
@@ -176,7 +182,8 @@ export default async function Home() {
       {/* Brutalist Text Marquee */}
       <Suspense fallback={<TextMarqueeFallback />}>
         <BrutalistTextMarquee 
-          text="🧢 LIMITED DROPS 🧢"
+          text="LIMITED DROPS"
+          separator="🧢"
           bgColor="bg-black"
           textColor="text-white"
           borderColor="theme-accent-bg"
@@ -197,7 +204,8 @@ export default async function Home() {
       {/* Second Brutalist Text Marquee below hat carousel */}
       <Suspense fallback={<TextMarqueeFallback />}>
         <BrutalistTextMarquee 
-          text="🔥 HOT HATS 🔥"
+          text="HOT HATS"
+          separator="🔥"
           bgColor="bg-black"
           textColor="text-white"
           borderColor="theme-accent-bg"
@@ -217,7 +225,8 @@ export default async function Home() {
       {/* ADDED: Testimonial Marquee */}
       <Suspense fallback={<TextMarqueeFallback />}>
         <BrutalistTextMarquee 
-          text="⭐ TRUSTED REVIEWS ⭐"
+          text="TRUSTED REVIEWS"
+          separator="⭐"
           bgColor="bg-black"
           textColor="text-white"
           borderColor="theme-accent-bg"
@@ -271,7 +280,8 @@ export default async function Home() {
       {/* Community Text Marquee - MOVED to above newsletter signup */}
       <Suspense fallback={<TextMarqueeFallback />}>
         <BrutalistTextMarquee 
-          text="❤️ JOIN THE HAT GANG ❤️"
+          text="JOIN THE HAT GANG"
+          separator="❤️"
           bgColor="bg-black"
           textColor="text-white"
           borderColor="theme-accent-bg"
